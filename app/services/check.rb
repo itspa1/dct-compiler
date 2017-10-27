@@ -13,19 +13,19 @@ class Check
   end
 
   def has_cache
-    @flag = File.exist?("#{self.name}.#{self.extension}")
+    @flag = File.exist?("temporary/#{self.name}.#{self.extension}")
     if @flag
       case self.extension
         when "js"
-          file = File.readlines("#{self.name}.#{self.extension}")
+          file = File.readlines("temporary/#{self.name}.#{self.extension}")
           size = file.size
           @con = file[1..size].join("")
         when "py"
-          file = File.readlines("#{self.name}.#{self.extension}")
+          file = File.readlines("temporary/#{self.name}.#{self.extension}")
           size = file.size
           @con = file[3..size].join("")
         else
-          file = File.readlines("#{self.name}.#{self.extension}")
+          file = File.readlines("temporary/#{self.name}.#{self.extension}")
           size = file.size
           @con = file[3..size - 2].join("")
       end
