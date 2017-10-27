@@ -13,17 +13,17 @@ class InputFile
   end
 
   def createFile
-    somefile = File.open("#{self.name}.#{self.extension}","w")
+    somefile = File.open("temporary/#{self.name}.#{self.extension}","w")
     case self.extension
     when "js"
-      somefile.puts "var fs = require('fs'); var access = fs.createWriteStream('#{self.name}.txt'); access.truncate; process.stdout.write = process.stderr.write = access.write.bind(access); process.on('uncaughtException', function(err) { console.error((err && err.stack) ? err.stack : err); });"
+      somefile.puts "var fs = require('fs'); var access = fs.createWriteStream('temporary/#{self.name}.txt'); access.truncate; process.stdout.write = process.stderr.write = access.write.bind(access); process.on('uncaughtException', function(err) { console.error((err && err.stack) ? err.stack : err); });"
       somefile.puts self.content
     when "py"
       somefile.puts "import sys"
-      somefile.puts "sys.stdout = sys.stderr = open(\"#{self.name}.txt\",\"w\")"
+      somefile.puts "sys.stdout = sys.stderr = open(\"temporary/#{self.name}.txt\",\"w\")"
       somefile.puts self.content
     else
-    somefile.puts "fname = File.open(\"#{self.name}.txt\",\"w\")"
+    somefile.puts "fname = File.open(\"temporary/#{self.name}.txt\",\"w\")"
     somefile.puts "$stderr = fname"
     somefile.puts "$stdout = fname"
     somefile.puts self.content
@@ -35,19 +35,19 @@ class InputFile
   def execute
     case self.extension
     when "js"
-      cmd = "node #{self.name}.js"
+      cmd = "node temporary/#{self.name}.js"
       `#{cmd}`
     when "py"
-      cmd = "python3 #{self.name}.py"
+      cmd = "python3 temporary/#{self.name}.py"
       `#{cmd}`
     else
-    cmd = "ruby #{self.name}.rb"
+    cmd = "ruby temporary/#{self.name}.rb"
     `#{cmd}`
     end
   end
 
   def respond
-    val = File.read("#{self.name}.txt")
+    val = File.read("temporary/#{self.name}.txt")
     case self.extension
       when "py"
         if val.split("line ").size > 1
