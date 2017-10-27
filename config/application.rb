@@ -13,7 +13,6 @@ module Cc
     # -- all .rb files in that directory are automatically loaded.
 
     config.autoload_paths << Rails.root.join('app', 'services')
-    config.npm.output_file
   end
 
 end
