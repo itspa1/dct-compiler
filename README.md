@@ -16,5 +16,3 @@
 =======
 # online-compiler
 A rails application which is an Online Compiler
-
->>>>>>> d61b5fb58e95f77a4420b6949aa5202911ac995e
