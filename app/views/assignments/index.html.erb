@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Assignments</h1>
+<div class="container-fluid">
+<table id="myTable" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+      <th>Url</th>
+      <th>Tags</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assignments.each do |assignment| %>
+      <tr>
+        <td><%= assignment.title %></td>
+        <td><%= assignment.body %></td>
+        <td><%= assignment.url %></td>
+        <td><%= assignment.tag_list %></td>
+        <td><%= link_to 'Show', assignment %>
+          <% if current_user %>
+        <%= link_to 'Edit', edit_assignment_path(assignment) %>
+        <%= link_to 'Destroy', assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+
+<%= link_to 'New Assignment', new_assignment_path %>
+
+<script>
+  $(document).ready(function(){
+    $('#myTable').DataTable();
+  });
+</script>

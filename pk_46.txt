@@ -1,0 +1,3 @@
+this is ruby
+pk_46.rb:5:in `+': String can't be coerced into Integer (TypeError)
+	from pk_46.rb:5:in `<main>'
