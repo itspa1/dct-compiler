@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :assignments
+  resources :answers
   root "assignments#index"
   get 'home/index'
   get 'home/input'
