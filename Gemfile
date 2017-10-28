@@ -9,7 +9,8 @@ gem 'acts-as-taggable-on', '~> 4.0'
 gem 'devise'
 gem 'pry'
 gem 'rails', '~> 5.0.6'
-gem 'pg'
+gem 'pg' , group: :production
+gem 'sqlite3' ,group: :development
 gem 'puma', '~> 3.0'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
