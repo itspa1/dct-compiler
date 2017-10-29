@@ -62,8 +62,9 @@ var result = CodeMirror(document.getElementById('result'),{
       url: "<%= home_check_cache_path %>",
       type: "get",
       data: {
-        name: eName,
-        extension: lang
+        uid: "<%= current_user.id %>",
+        aid: "<%= @assignment.id %>",
+        language: lang
       },
       success: function(response){
         resp = response["response"];
@@ -130,6 +131,8 @@ var result = CodeMirror(document.getElementById('result'),{
     args["user_id"] = "<%= current_user.id %>";
     args["statement"] = sent;
     args["output"] = out;
+    args["assignment_id"] = "<%= @assignment.id %>";
+    args["language"] = lang;
     if(sent == js || sent == pythoncon || sent == rubycon || out == "Your result appears here"){
       alert("Can't be empty");
     }else{
