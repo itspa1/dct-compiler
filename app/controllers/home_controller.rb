@@ -19,9 +19,10 @@ class HomeController < ApplicationController
 
   def check_cache
     @response = {}
-    @name = params[:name]
-    @ex = params[:extension]
-    @obj = Check.new(@name,@ex)
+    @uid = params[:uid]
+    @aid = params[:aid]
+    @lang = params[:language]
+    @obj = Check.new(@uid,@aid,@lang)
     @response["response"] = @obj.has_cache
     respond_to do |format|
       format.json { render json: @response}
