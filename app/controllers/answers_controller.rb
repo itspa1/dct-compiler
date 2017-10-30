@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   # GET /answers
   # GET /answers.json
   def index
-    @answers = Answer.all
+    @answers = Answer.all.limit(100)
   end
 
   # GET /answers/1
@@ -30,6 +30,7 @@ class AnswersController < ApplicationController
       if @answer.save
         #format.html { redirect_to @answer, notice: 'Answer was successfully created.' }
         format.json { render :show, status: :created, location: @answer }
+        FileDeleteJob.perform_later @answer
       else
         #format.html { render :new }
         format.json { render json: @answer.errors, status: :unprocessable_entity }
@@ -42,10 +43,11 @@ class AnswersController < ApplicationController
   def update
     respond_to do |format|
       if @answer.update(answer_params)
-        format.html { redirect_to @answer, notice: 'Answer was successfully updated.' }
+        #format.html { redirect_to @answer, notice: 'Answer was successfully updated.' }
         format.json { render :show, status: :ok, location: @answer }
+        FileDeleteJob.perform_later @answer
       else
-        format.html { render :edit }
+        #format.html { render :edit }
         format.json { render json: @answer.errors, status: :unprocessable_entity }
       end
     end
