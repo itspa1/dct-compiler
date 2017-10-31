@@ -49,7 +49,7 @@ class InputFile
       end
     end
   rescue Timeout::Error
-    f = File.open("temporary/#{self.name}.txt","a")
+    f = File.open("temporary/#{self.name}.txt","w")
     s = File.read("temporary/#{self.name}_new.txt")
     id = s.to_i
     com = "kill #{id}"
