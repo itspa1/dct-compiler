@@ -16,5 +16,6 @@ class FileDeleteJob < ApplicationJob
         File.delete("temporary/#{name}.py")
       end
       File.delete("temporary/#{name}.txt")
+      File.delete("temporary/#{name}_new.txt")
     end
 end
