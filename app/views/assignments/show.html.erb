@@ -15,7 +15,12 @@
   <%= @assignment.url %>
 </p>
 
+<% if can? :create,Answer %>
 <%= render '/home/index' %>
+<% end %>
 
+<% if can? :update, @assignment %>
 <%= link_to 'Edit', edit_assignment_path(@assignment) %> |
+<% end %>
+
 <%= link_to 'Back', assignments_path %>

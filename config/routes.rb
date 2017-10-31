@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get 'tags/index'
+  get 'tags/question_filter'
+
   devise_for :users
   resources :assignments
   resources :answers

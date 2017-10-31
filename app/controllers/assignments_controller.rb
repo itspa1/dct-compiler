@@ -1,6 +1,6 @@
 class AssignmentsController < ApplicationController
-  skip_before_action :verify_authenticity_token
   before_action :authenticate_user! , except: [:index]
+  load_and_authorize_resource
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   # GET /assignments
@@ -27,7 +27,8 @@ class AssignmentsController < ApplicationController
   # POST /assignments.json
   def create
     @assignment = Assignment.new(assignment_params)
-
+    @assignment.tag_list = params[:assignment][:tag_list]
+    @assignment.company_list = params[:assignment][:company_list]
     respond_to do |format|
       if @assignment.save
         format.html { redirect_to @assignment, notice: 'Assignment was successfully created.' }
@@ -71,6 +72,6 @@ class AssignmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_params
-      params.require(:assignment).permit(:title, :body, :url, :tag_list)
+      params.require(:assignment).permit(:title, :body, :url, :user_id, :source , :tag_list, :company_list)
     end
 end
