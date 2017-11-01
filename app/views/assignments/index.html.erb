@@ -22,8 +22,12 @@
         <td><%= assignment.tag_list %></td>
         <td><%= link_to 'Show', assignment %>
           <% if current_user %>
-        <%= link_to 'Edit', edit_assignment_path(assignment) %>
-        <%= link_to 'Destroy', assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% if can? :update, assignment %>
+              <%= link_to 'Edit', edit_assignment_path(assignment) %>
+            <% end %>
+            <% if can? :destroy, assignment %>
+              <%= link_to 'Destroy', assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
         <% end %>
       </tr>
     <% end %>
@@ -34,6 +38,10 @@
 
 <% if can? :create, Assignment %>
 <%= link_to 'New Assignment', new_assignment_path %>
+<% end %>
+
+<% if can? :create , User %>
+<%= link_to "Invite",new_user_path %>
 <% end %>
 
 <script>

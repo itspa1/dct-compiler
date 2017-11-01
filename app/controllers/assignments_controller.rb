@@ -1,12 +1,12 @@
 class AssignmentsController < ApplicationController
-  before_action :authenticate_user! , except: [:index]
+  before_action :authenticate_user!
   load_and_authorize_resource
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   # GET /assignments
   # GET /assignments.json
   def index
-    @assignments = Assignment.all.limit(100)
+    @assignments = Assignment.all.limit(10)
   end
 
   # GET /assignments/1

@@ -10,9 +10,9 @@ class TagsController < ApplicationController
     @tag_name = params[:tag_name].split(",")
     @type = params[:type]
     if @type == "exact"
-      @questions = Assignment.tagged_with(@tag_name,:match_all => true)
+      @questions = Assignment.tagged_with(@tag_name,:match_all => true).where("is_allowed = ?",true)
     else
-      @questions = Assignment.tagged_with(@tag_name,:any => true)
+      @questions = Assignment.tagged_with(@tag_name,:any => true).where("is_allowed = ?",true)
     end
     respond_to do |format|
       format.json { render json: @questions,only: [:id,:title,:body]}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Cc</title>
+    <title>cc</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -38,11 +38,13 @@
       <!-- crossorigin="anonymous"></script> -->
 
       <% if current_user %>
+        <% if current_user.roles.map{|n| n.name}.include? "admin" %>
+        <%= link_to "Admin-panel" , "" %>
+        <% end %>
     		<%= link_to "Log-out", destroy_user_session_path ,method: :delete, data: {confirm: "Are You Sure?"}%>
     		<span><%= current_user.username %></span>
     	<% else %>
     		<%= link_to "Log-in" , new_user_session_path %>
-        <%= link_to "sign-up",new_user_registration_path %>
     	<% end %>
 
     <%= yield %>

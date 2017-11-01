@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do
 		redirect_to root_path ,notice: "You are not Authorized to access to this page."
-	end
+	end 
 
   protected
 

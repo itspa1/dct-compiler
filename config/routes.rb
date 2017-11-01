@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
 
+  devise_for :users , :path_prefix => "my"
+  root "assignments#index"
   get 'tags/index'
   get 'tags/question_filter'
-
-  devise_for :users
+  resources :users
   resources :assignments
   resources :answers
-  root "assignments#index"
   get 'home/index'
   get 'home/input'
   get 'home/check_cache'

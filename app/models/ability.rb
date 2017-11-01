@@ -10,13 +10,12 @@ class Ability
     #   else
     #     can :read, :all
     #   end
-    if user.nil?  #not logged in
-        can [:read] , [Assignment]
-    elsif user.role? "admin"
+    if user.role? "admin"
         can [:create,:destroy,:update], :all
         can :read, :all
     elsif user.role?  "contributor"
         can :create, [Assignment,Answer]
+        can :read , [Assignment,Answer]
         can :update, Assignment do |a|
           a.user == user
         end
@@ -26,7 +25,6 @@ class Ability
         can :destroy, Assignment do |a|
           a.user == user
         end
-        can :read , [Assignment,Answer]
     elsif user.role? "solver"
         can :read, [Assignment,Answer]
         can :create, Answer
@@ -36,10 +34,6 @@ class Ability
     elsif user.role? "moderator"
         can :read ,[Assignment,Answer]
         can :update, Assignment
-        can :destroy, [Answer,Assignment]
-    elsif user.role? "user"
-        can :read, [Assignment,Answer]
-        can :create , Answer
     end
     # The first argument to `can` is the action you are giving the user
     # permission to do.
