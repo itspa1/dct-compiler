@@ -1,0 +1,10 @@
+<% if @users.nil? %>
+<span>No users yet</span>
+<% else %>
+<h2>Listing Users</h2>
+<ul>
+  <% @users.each do |u| %>
+  <li><%= link_to u.username , u%></li>
+  <% end %>
+</ul>
+<% end %>
