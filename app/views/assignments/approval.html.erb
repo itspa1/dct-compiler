@@ -1,0 +1,34 @@
+<h2 align="center">Listing Questions Needing Approval To Be Made Api Available</h2>
+
+<table id="myTable" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Code</th>
+      <th>Body</th>
+      <th>Ans count</th>
+      <th>Tags</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assignments.each do |assignment| %>
+      <tr>
+        <td><%= assignment.title %></td>
+        <td><%= assignment.code %></td>
+        <td><%= raw (assignment.body).truncate(75) %></td>
+        <td><%= assignment.answers.size %></td>
+        <td><%= assignment.tag_list %></td>
+        <td><%= link_to 'Show', assignment %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<script>
+  $(document).ready(function(){
+    $('#myTable').DataTable();
+  });
+</script>

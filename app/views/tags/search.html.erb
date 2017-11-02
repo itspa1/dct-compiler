@@ -1,0 +1,45 @@
+<div class="col-md-8 col-md-offset-2">
+  <div class="text-center">
+    <h1>Search</h1>
+  </div>
+  <div class="text-center">
+    <input type="radio" name="type" value="any" id="any">Any
+    <input type="radio" name="type" value="exact" id="exact">Exact
+  </div>
+
+  <div class="form-group">
+    <label for="Enter Input">Enter Input</label>
+    <input type="text" value="" data-role="tagsinput" id="search" class="form-control" />
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    checked = "";
+    $("#any").on('click',function(){
+      checked = $("#any").val();
+    });
+    $("#exact").on('click',function(){
+      checked = $("#exact").val();
+    });
+    $("#search").on('itemAdded itemRemoved',function(){
+      if(checked != ""){
+        sentTag = $("#search").val();
+        $.ajax({
+          url: "<%= tags_questions_path %>",
+          type: "get",
+          data: {
+            type: 'json',
+            tag_name: sentTag,
+            search_type: checked
+          },
+          success: function(response){
+            console.log(response);
+          }
+        });
+      }else{
+        alert("Please select search type");
+      }
+    });
+  });
+</script>
