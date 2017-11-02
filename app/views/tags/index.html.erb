@@ -1,2 +1,4 @@
-<h1>Tags#index</h1>
-<p>Find me in app/views/tags/index.html.erb</p>
+<h1>Listing Tags</h1>
+<% @tags.each do |t| %>
+<li><%= t.name %></li>
+<% end %>

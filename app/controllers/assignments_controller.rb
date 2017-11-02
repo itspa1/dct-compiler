@@ -1,6 +1,7 @@
 class AssignmentsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
+  skip_authorize_resource :only => [:recents,:approved,:deleted,:approval]
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   # GET /assignments
@@ -62,6 +63,22 @@ class AssignmentsController < ApplicationController
       format.html { redirect_to assignments_url, notice: 'Assignment was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def recents
+    @assignments = Assignment.order(created_at: :desc).limit(10)
+  end
+
+  def approved
+    @assignments = Assignment.where(is_allowed: :true)
+  end
+
+  def deleted
+    @assignments = Assignment.only_deleted
+  end
+
+  def approval
+    @assignments = Assignment.where(is_allowed: :false).limit(10)
   end
 
   private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171101075627) do
+ActiveRecord::Schema.define(version: 20171102054126) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20171101075627) do
     t.string   "source"
     t.boolean  "is_allowed", default: false
     t.datetime "deleted_at"
+    t.string   "code"
     t.index ["deleted_at"], name: "index_assignments_on_deleted_at"
   end
 
