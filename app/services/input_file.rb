@@ -1,3 +1,4 @@
+require 'timeout'
 class InputFile
   attr_accessor :name,:content,:extension
 
@@ -23,27 +24,39 @@ class InputFile
       somefile.puts "sys.stdout = sys.stderr = open(\"temporary/#{self.name}.txt\",\"w\")"
       somefile.puts self.content
     else
-    somefile.puts "fname = File.open(\"temporary/#{self.name}.txt\",\"w\")"
-    somefile.puts "$stderr = fname"
-    somefile.puts "$stdout = fname"
-    somefile.puts self.content
-    somefile.puts "fname.close"
+      somefile.puts "fname = File.open(\"temporary/#{self.name}.txt\",\"w\")"
+      somefile.puts "$stderr = fname"
+      somefile.puts "$stdout = fname"
+      somefile.puts self.content
+      somefile.puts "fname.close"
     end
     somefile.close
   end
 
   def execute
-    case self.extension
-    when "js"
-      cmd = "node temporary/#{self.name}.js"
+    begin
+      Timeout::timeout(5) do
+      case self.extension
+      when "js"
+        cmd = "node temporary/#{self.name}.js & echo $! > temporary/#{self.name}_new.txt"
+        `#{cmd}`
+      when "py"
+        cmd = "python3 temporary/#{self.name}.py & echo $! > temporary/#{self.name}_new.txt"
+        `#{cmd}`
+      else
+      cmd = "ruby temporary/#{self.name}.rb & echo $! > temporary/#{self.name}_new.txt"
       `#{cmd}`
-    when "py"
-      cmd = "python3 temporary/#{self.name}.py"
-      `#{cmd}`
-    else
-    cmd = "ruby temporary/#{self.name}.rb"
-    `#{cmd}`
+      end
     end
+  rescue Timeout::Error
+    f = File.open("temporary/#{self.name}.txt","w")
+    s = File.read("temporary/#{self.name}_new.txt")
+    id = s.to_i
+    com = "kill #{id}"
+    `#{com}`
+    f.puts "Your Program did not yield any output or ran for too long (>5000ms). Process Killed."
+    f.close
+  end
   end
 
   def respond

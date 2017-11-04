@@ -10,10 +10,10 @@ class Check
   def has_cache
     @flag = Answer.where(user_id: self.uid,assignment_id: self.aid,language: self.lang)
     if @flag.empty?
-      @con = "default"
+      @con = {"statement"=> "default"}
       return @con
     else
-      @con = @flag.first.statement
+      @con = @flag.first
     end
     return @con
   end

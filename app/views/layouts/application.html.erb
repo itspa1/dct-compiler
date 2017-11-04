@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Cc</title>
+    <title>cc</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+          <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+          crossorigin="anonymous"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+          crossorigin="anonymous"></script>
+          <script src="/javascripts/codemirror.js"></script>
+          <script src="/javascripts/javascript/javascript.js"></script>
+          <script src="/javascripts/ruby.js"></script>
+          <script src="/javascripts/python.js"></script>
+          <script src="/javascripts/javascript.js"></script>
+          <script src="/javascripts/sublime.js"></script>
 
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
@@ -24,23 +37,14 @@
       <!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" -->
       <!-- crossorigin="anonymous"></script> -->
 
-      <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-      crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-      crossorigin="anonymous"></script>
-      <script src="/javascripts/codemirror.js"></script>
-      <script src="/javascripts/javascript/javascript.js"></script>
-      <script src="/javascripts/ruby.js"></script>
-      <script src="/javascripts/python.js"></script>
-      <script src="/javascripts/javascript.js"></script>
-      <script src="/javascripts/sublime.js"></script>
       <% if current_user %>
+        <% if current_user.roles.map{|n| n.name}.include? "admin" %>
+        <%= link_to "Admin-panel" , "" %>
+        <% end %>
     		<%= link_to "Log-out", destroy_user_session_path ,method: :delete, data: {confirm: "Are You Sure?"}%>
     		<span><%= current_user.username %></span>
     	<% else %>
     		<%= link_to "Log-in" , new_user_session_path %>
-        <%= link_to "sign-up",new_user_registration_path %>
     	<% end %>
 
     <%= yield %>
