@@ -1,0 +1,9 @@
+<h2>Listing Recently Added Answers</h2>
+
+<% if @answers.empty? %>
+<p>No Recent Answers</p>
+<% else %>
+  <% @answers.each do |answer| %>
+  <li><%= answer.statement %></li>
+  <% end %>
+<% end %>

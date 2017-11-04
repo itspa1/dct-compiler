@@ -1,0 +1,40 @@
+<h2 align="center">Listing Questions Which Needs Approval</h2>
+
+<table id="myTable" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Code</th>
+      <th>Body</th>
+      <th>Tags</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assignments.each do |assignment| %>
+      <tr>
+        <td><%= assignment.title %></td>
+        <td><%= assignment.code %></td>
+        <td><%= raw (assignment.body).truncate(75) %></td>
+        <td><%= assignment.answers.size %></td>
+        <td><%= link_to 'Show', assignment %>
+          <% if current_user %>
+            <% if can? :update, assignment %>
+              <%= link_to 'Edit', edit_assignment_path(assignment) %>
+            <% end %>
+            <% if can? :destroy, assignment %>
+              <%= link_to 'Destroy', assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<script>
+  $(document).ready(function(){
+    $('#myTable').DataTable();
+  });
+</script>

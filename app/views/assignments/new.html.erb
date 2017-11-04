@@ -48,7 +48,7 @@
               $('.results').append("You might want to check with these assignments these look similar.");
               $('.results').append("<ul>");
               response.forEach(function(r){
-                $('.results').append("<li><a data-toggle=\"modal\" href=/assignments/" + r.id +" data-target=\"#question\" >  " + r.title +"</a></li>");
+                $('.results').append("<li><a href=/assignments/" + r.id +">" + r.title +"</a></li>");
               });
               $('.results').append("</ul>");
             }
@@ -72,7 +72,7 @@
           type: "get",
           success: function(response){
             if(response["success"] == false){
-
+              
             }else{
               $("#assignment_title").val(response["name"]);
               CKEDITOR.instances['assignment_body'].setData(response["description"]);

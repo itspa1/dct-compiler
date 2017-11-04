@@ -96,9 +96,9 @@ $(document).ready(function(){
   var lang = "ruby";
   var eName = "<%= current_user.try(:id).to_s + "_" + @assignment.id.to_s %>";
   var web = "/answers/"
-  var js = "//type code here";
-  var pythoncon = "#type code here";
-  var rubycon = "#type code here";
+  var js = jcode = "//type code here";
+  var pythoncon = pcode = "#type code here";
+  var rubycon = rcode = "#type code here";
   var j = 1;
   var rid = 0;
   var jsid = 0;
@@ -141,18 +141,18 @@ $(document).ready(function(){
           switch (lang) {
             case "python":
               editor.setOption("value",js);
-              editor.setOption("value", pythoncon);
+              editor.setOption("value", pcode);
               result.setOption("value","Your result appears here");
               flag = true;
               break;
             case "javascript":
-              editor.setOption("value", js);
+              editor.setOption("value", jcode);
               result.setOption("value","Your result appears here");
               flag = true;
               break;
             default:
               editor.setOption("value",js);
-              editor.setOption("value",rubycon);
+              editor.setOption("value",rcode);
               result.setOption("value","Your result appears here");
               flag = true;
               break;
@@ -198,6 +198,17 @@ $(document).ready(function(){
             'error'
           )
         }else{
+          switch (lang) {
+            case "python":
+              pcode = sent;
+              break;
+            case "javascript":
+              jcode = sent;
+              break;
+            default:
+              rcode = sent;
+              break;
+          }
         $.ajax({
           url: "<%= home_input_path%>",
           type: "get",
@@ -263,7 +274,11 @@ $(document).ready(function(){
             answer: args
           },
           success: function(response){
-
+            swal(
+              'Success',
+              'Your code was updated successfully.',
+              'success'
+            )
           }
         });
       }
