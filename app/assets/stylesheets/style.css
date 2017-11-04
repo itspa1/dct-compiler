@@ -1,9 +1,16 @@
 .top-margin{
-  margin-top: 55px
+  margin-top: 63px
 }
 .bottom-margin{
   margin-bottom: 10px
 }
 .right-btn{
   margin-left: 400px
+}
+.padding-bottom{
+  padding-bottom: 10px
+}
+
+.font{
+  font-size: 40px
 }

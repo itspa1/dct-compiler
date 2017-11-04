@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   load_and_authorize_resource
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
+  skip_authorize_resource :only => [:recents]
 
   # GET /answers
   # GET /answers.json
@@ -62,6 +63,10 @@ class AnswersController < ApplicationController
       format.html { redirect_to answers_url, notice: 'Answer was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def recents
+    @answer = Answer.order(created_at: :desc).limit(10)
   end
 
   private

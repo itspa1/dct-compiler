@@ -1,18 +1,21 @@
 class AssignmentsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  skip_authorize_resource :only => [:recents,:approved,:deleted,:approval]
+  skip_authorize_resource  only: [:recents,:approved,:deleted,:approval,:search,:sources,:approve]
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   # GET /assignments
   # GET /assignments.json
   def index
-    @assignments = Assignment.all.limit(10)
+    @assignments = Assignment.where(approved: true).includes(:tags).limit(10)
   end
 
   # GET /assignments/1
   # GET /assignments/1.json
   def show
+    @rb = @assignment.answers.where(language: "ruby")
+    @js = @assignment.answers.where(language: "javascript")
+    @py = @assignment.answers.where(language: "python")
   end
 
   # GET /assignments/new
@@ -73,12 +76,31 @@ class AssignmentsController < ApplicationController
     @assignments = Assignment.where(is_allowed: :true)
   end
 
+  def approve
+    @assignments = Assignment.where(approved: :false).limit(10)
+  end
+
   def deleted
     @assignments = Assignment.only_deleted
   end
 
   def approval
     @assignments = Assignment.where(is_allowed: :false).limit(10)
+  end
+
+  def search
+    @search = Assignment.search do
+      fulltext params[:search] do
+        boost_fields :title => 5.0
+      end
+    end
+    respond_to do |format|
+      format.json { render json: @search.results }
+    end
+  end
+
+  def sources
+    @sources = Assignment.all.map{|n| n.source}.uniq
   end
 
   private

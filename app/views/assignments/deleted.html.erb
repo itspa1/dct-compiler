@@ -22,8 +22,8 @@
         <td><%= assignment.is_allowed ? "true" : "false" %></td>
         <td><%= assignment.answers.size %></td>
         <td><%= assignment.tag_list %></td>
-        <td><%= link_to 'Restore', deleted_assignments_path(assignment) %>
-          <%= link_to 'Delete Forever',deleted_assignments_path(assignment) ,method: :delete , data: { confirm: 'Are you sure?' }%></td>
+        <td><%= link_to 'Restore', paranoid_restore_path(id: assignment.id) %>
+          <%= link_to 'Delete Forever',paranoid_delete_forever_path(id: assignment.id), data: { confirm: 'Are you sure?' }%></td>
       </tr>
     <% end %>
   </tbody>

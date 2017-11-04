@@ -1,19 +1,27 @@
 Rails.application.routes.draw do
 
   devise_for :users , :path_prefix => "my"
-
   resources :users
   resources :assignments do
     collection do
       get 'recents' # to override assignments_recents action will be recents_assignments
       get 'approved'
       get 'deleted'
-      match 'deleted/:id',to: 'assignments#delete_forever' , via: [:delete]
-      match 'deleted/:id',to: 'assignments#restore' , via: [:post]
-      get 'approval'  
+      get 'search'
+      get 'approval'
+      get 'sources'
+      get 'approve'
     end
   end
-  resources :answers
+
+  get 'paranoid/restore'
+  get 'paranoid/delete_forever'
+
+  resources :answers do
+      collection do
+        get 'recents'
+      end
+  end
 
 
   get 'tags/index'

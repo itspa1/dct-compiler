@@ -1,5 +1,91 @@
-<h1>New Assignment</h1>
 
+<h2 align="center" class="page-header">New Assignment</h2>
+<div class="col-md-6">
+  <h2 align="Center">Form</h2>
 <%= render 'form', assignment: @assignment %>
-
 <%= link_to 'Back', assignments_path %>
+</div>
+
+<div class="col-md-6">
+  <h2>Check for existing assignments</h2>
+  <form class="" id="search-form">
+    <%= text_field_tag :search  %>
+    <%= submit_tag "Search" ,:id => "submit" %>
+  </form>
+  <div class="results"></div>
+  <div id="codewars">
+    <h4>Codewars question??? enter the slug here We'll fetch it for you</h4>
+    <form class="" id="codewars-form">
+      <%= text_field_tag :input %>
+      <%= submit_tag "Fetch" ,:id => "fetch" %>
+    </form>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#codewars").hide();
+    $("#search-form").on('submit',function(e){
+      e.preventDefault();
+      if($("#search").val() == ""){
+        swal(
+          'Ooops...!!!',
+          'You need to enter something for me to search.',
+          'error'
+        )
+      }else{
+        $.ajax({
+          url: "<%= search_assignments_path %>",
+          type: "get",
+          data: {
+            type: 'json',
+            search: $("#search").val()
+          },
+          success: function(response){
+            if(response.length == 0){
+              $("#codewars").show();
+            }else{
+              $('.results').empty();
+              $('.results').append("You might want to check with these assignments these look similar.");
+              $('.results').append("<ul>");
+              response.forEach(function(r){
+                $('.results').append("<li><a data-toggle=\"modal\" href=/assignments/" + r.id +" data-target=\"#question\" >  " + r.title +"</a></li>");
+              });
+              $('.results').append("</ul>");
+            }
+          }
+        });
+      }
+    });//search form end
+
+    $("#codewars-form").on('submit',function(e){
+      e.preventDefault();
+      if($("#input").val() == ""){
+        swal(
+          'Ooops...!!!',
+          'You need to enter something for me to search.',
+          'error'
+        )
+      }else{
+        var slug = $("#input").val();
+        $.ajax({
+          url: "https://www.codewars.com/api/v1/code-challenges/" + slug,
+          type: "get",
+          success: function(response){
+            if(response["success"] == false){
+
+            }else{
+              $("#assignment_title").val(response["name"]);
+              CKEDITOR.instances['assignment_body'].setData(response["description"]);
+              $("#assignment_url").val(response["url"]);
+              $("#assignment_tag_list").val(response["tags"].join(","));
+              $("#assignment_source").val("codewars");
+            }
+          }
+        });
+      }
+    });
+
+
+
+  });
+</script>

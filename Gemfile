@@ -22,7 +22,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'cancancan', '~> 2.0'
 gem 'acts_as_paranoid'
 gem "mustache"
-
+gem 'sunspot_rails'
 
 group :development, :test do
   gem 'byebug', platform: :mri
@@ -38,6 +38,7 @@ group :development do
   gem 'capistrano-rails', '~> 1.1', '>= 1.1.6'
   gem 'capistrano-rbenv', '~> 2.0', '>= 2.0.4'
   gem 'capistrano3-puma'
+  gem 'sunspot_solr'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

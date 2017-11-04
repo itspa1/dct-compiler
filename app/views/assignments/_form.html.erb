@@ -32,7 +32,7 @@
 
   <div class="field">
     <%= f.label :tag_list %>
-    <%= f.text_field :tag_list %>
+    <%= f.text_field :tag_list , datarole: "tagsinput" %>
   </div>
 
 
@@ -50,3 +50,7 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  CKEDITOR.replace('assignment_body');
+</script>

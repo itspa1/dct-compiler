@@ -12,15 +12,17 @@ class TagsController < ApplicationController
   end
 
   def questions
+    # @response = {}
     @tag_name = params[:tag_name].split(",")
-    @type = params[:type]
+    @type = params[:search_type]
     if @type == "exact"
       @questions = Assignment.tagged_with(@tag_name,:match_all => true)
     else
       @questions = Assignment.tagged_with(@tag_name,:any => true)
     end
+    # @response["response"] = @questions
     respond_to do |format|
-      format.json { render json: @questions,only: [:id,:title,:body]}
+      format.json { render json: @questions,only: [:title,:code,:body,:is_allowed]}
     end
   end
 
@@ -33,8 +35,10 @@ class TagsController < ApplicationController
       @questions = Assignment.tagged_with(@tag_name,:any => true).where("is_allowed = ?",true)
     end
     respond_to do |format|
-      format.json { render json: @questions,only: [:id,:title,:body]}
+      format.json { render json: @questions,only: [:id,:title,:body],include: :tags }
     end
   end
+
+
 
 end

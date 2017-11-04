@@ -1,6 +1,11 @@
 class Assignment < ApplicationRecord
 
-  validates_uniqueness_of :code
+  searchable do
+    string :title
+    text :body
+  end
+
+  validates_uniqueness_of :code , message: "Re-submit to generate a new code."
 
   acts_as_paranoid
 
@@ -9,12 +14,11 @@ class Assignment < ApplicationRecord
   acts_as_taggable
 	acts_as_taggable_on :tags,:companies
 
-  after_save :assign_code
+  before_validation :assign_code,on: :create
 
   def assign_code
     @code = "DCT" + SecureRandom.hex(2)
     self.code = @code
-    self.save
   end
 
 end

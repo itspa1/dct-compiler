@@ -4,8 +4,8 @@
   <title>cc</title>
   <%= csrf_meta_tags %>
 
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
@@ -17,9 +17,24 @@
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+
+  <!-- ckeditor -->
+  <script src="https://cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
+
+  <!-- sweet alert 2 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js" integrity="sha256-c0+AvbVv3lvLpN+Z62FyWFP5up0LfGELvEYbcow9nco=" crossorigin="anonymous"></script>
+
+  <!-- fonts -->
+  <link rel="stylesheet" href="/font-mfizz/font-mfizz.css">
+
+
+  <!-- codemirror stylesheets -->
   <link rel="stylesheet" href="/stylesheets/codemirror.css">
   <link rel="stylesheet" href="/stylesheets/eclipse.css">
+  <link rel="stylesheet" href="/stylesheets/monokai.css">
+  <!-- datatable -->
   <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
 
 
@@ -50,10 +65,11 @@
             <li><%= link_to "New", new_assignment_path %></li>
             <li><%= link_to "Search", tags_search_path %></li>
             <li><%= link_to "List", assignments_path %></li>
+            <li><%= link_to "Pending Approval", approve_assignments_path %></li>
             <li><%= link_to "Recently Added", recents_assignments_path %></li>
-            <li><%= link_to "Approved" , approved_assignments_path %></li>
+            <li><%= link_to "Api available" , approved_assignments_path %></li>
             <li><%= link_to "Deleted" , deleted_assignments_path %></li>
-            <li><%= link_to "Needs Approval" , approval_assignments_path %></li>
+            <li><%= link_to "Make api available" , approval_assignments_path %></li>
           </ul>
 
         </li>
@@ -63,9 +79,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Answers<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><%= link_to "List", answers_path %></li>
-            <li><%= link_to "Recently Added", "todo" %></li>
-            <li><%= link_to "Approved", "todo" %></li>
-            <li><%= link_to "Deleted", "todo" %></li>
+            <li><%= link_to "Recently Added", recents_answers_path %></li>
           </ul>
         </li>
 
@@ -73,13 +87,14 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><%= link_to "Users", users_path %></li>
-            <li><%= link_to "Tags", tags_index_path %></li>
-            <li><%= link_to "Sources", "todo" %></li>
+            <li class="dropdown-submenu"><%= link_to "Tags", tags_index_path %></li>
+            <li><%= link_to "Sources", sources_assignments_path %></li>
           </ul>
         </li>
 
-        <span class="link">Welcome<%= current_user.username %></span>
+
         <li><%= link_to "Log-out", destroy_user_session_path ,method: :delete, data: {confirm: "Are You Sure?"}%></li>
+        <li><a href="">Welcome <%= current_user.username %></a></li>
         <% else %>
         <ul class="nav navbar-nav navbar-right">
           <li><%= link_to "Log-in" , new_user_session_path %></li>
@@ -96,7 +111,6 @@
     <%= yield %>
 
   </div>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
     crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>

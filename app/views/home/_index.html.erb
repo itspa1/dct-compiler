@@ -1,6 +1,6 @@
-<div id="closer">
+<div class="col-md-8">
   <div class="row">
-    <div class="col-md-6">
+    <div >
       <h2>Compiler</h2>
       <div class="form-inline">
 
@@ -8,22 +8,88 @@
         <option value="ruby">Ruby</option>
         <option value="javascript">JavaScript</option>
         <option value="python">Python3</option>
-      </select> <button type="button" name="submit" class="form-control btn btn-success right-btn" id="sub">Submit</button><br><br>
-    </div>
-      <div id="text" class="card card-outline mb-3">
+      </select>
 
-      </div>
-      <button type="button" name="execute" id="load" class="btn btn-primary">Execute</button>
+       <h4 class="pull-right"><b class="font">Stats:</b><i class="icon-javascript" style="font-size:2em" id="js" ><%= @js.size %></i> || <i class="icon-python" style="font-size:2em" id="py" ><%= @py.size %></i> || <i class="icon-ruby" style="font-size:2em" id="rb" ><%= @rb.size %></i></h4><br/><br/>
     </div>
 
-    <div class="col-md-6" id="para">
-      <h2>Output</h2>
-      <div id="result" class="card card-outline mb-3 top-margin">
+      <div class="col-md-12">
+        <div id="text" class="padding-bottom">
 
+        </div>
+        <button type="button" name="execute" id="load" class="btn btn-primary">Execute</button>
+        <button type="button" name="reset" id="reset" class="btn btn-danger">Reset</button>
+        <button type="button" name="submit" class="btn btn-success" id="sub">Submit</button>
       </div>
     </div>
   </div>
+
+    <div  id="para">
+      <h2>Output</h2>
+      <div id="result" class="padding-bottom">
+
+      </div>
+    </div>
+<!-- accordion -->
+<% if !@rb.empty? %>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Ruby Solutions
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <% @rb.each do |r| %>
+          <li><%=r.user.username %>-<%= r.statement %></li>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if !@js.empty? %>
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingTwo">
+    <h4 class="panel-title">
+      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Javascript solutions
+      </a>
+    </h4>
+  </div>
+  <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+    <div class="panel-body">
+      <% @js.each do |j| %>
+        <li><%= j.user.username %>-<%= j.statement %></li>
+      <% end %>
+    </div>
+  </div>
 </div>
+<% end %>
+
+<% if !@py.empty? %>
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingThree">
+    <h4 class="panel-title">
+      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Python Solutions
+      </a>
+    </h4>
+  </div>
+  <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div class="panel-body">
+      <% @py.each do |p| %>
+      <li><%= p.user.username %>-<%= p.statement %></li>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
+</div>
+
 <script type="text/javascript">
 $(document).ready(function(){
   var flag = true;
@@ -42,7 +108,7 @@ $(document).ready(function(){
     mode: "ruby",
     lineNumbers: true,
     keyMap: "sublime",
-    theme: "eclipse",
+    theme: "monokai",
     tabSize: 2,
     indentUnit: 2,
     smartIndent: true,
@@ -53,13 +119,13 @@ $(document).ready(function(){
     value: "Your result appears here",
     mode: "text",
     keyMap: "sublime",
-    theme: "eclipse",
+    theme: "monokai",
     tabSize: 2,
     tabIndex: 2,
     readOnly: "nocursor"
   });
 
-    $("#sel").change(function(){
+    $("#sel").on('change',function(){
       lang = this.value;
       $.ajax({
         url: "<%= home_check_cache_path %>",
@@ -76,15 +142,18 @@ $(document).ready(function(){
             case "python":
               editor.setOption("value",js);
               editor.setOption("value", pythoncon);
+              result.setOption("value","Your result appears here");
               flag = true;
               break;
             case "javascript":
               editor.setOption("value", js);
+              result.setOption("value","Your result appears here");
               flag = true;
               break;
             default:
               editor.setOption("value",js);
               editor.setOption("value",rubycon);
+              result.setOption("value","Your result appears here");
               flag = true;
               break;
           }
@@ -93,6 +162,7 @@ $(document).ready(function(){
             case "python":
               editor.setOption("value",js);
               editor.setOption("value",resp);
+              result.setOption("value","Your result appears here");
               pid = response["response"]["id"];
               web = "/answers/" + pid;
               flag = false;
@@ -100,12 +170,14 @@ $(document).ready(function(){
             case "javascript":
               editor.setOption("value",resp);
               jsid = response["response"]["id"];
+              result.setOption("value","Your result appears here");
               web = "/answers/" + jsid;
               flag = false;
               break;
             default:
               editor.setOption("value",js);
               editor.setOption("value",resp);
+              result.setOption("value","Your result appears here");
               rid = response["response"]["id"];
               web = "/answers/" + rid;
               flag = false;
@@ -120,7 +192,11 @@ $(document).ready(function(){
     $("#load").click(function(){
         var sent = editor.getValue();
         if(sent == js || sent == pythoncon || sent == rubycon){
-          alert('empty');
+          swal(
+            'Ooops...!!!',
+            "Looks like you din't type in any code.",
+            'error'
+          )
         }else{
         $.ajax({
           url: "<%= home_input_path%>",
@@ -147,7 +223,11 @@ $(document).ready(function(){
       args["assignment_id"] = "<%= @assignment.id %>";
       args["language"] = lang;
       if(sent == js || sent == pythoncon || sent == rubycon || out == "Your result appears here"){
-        alert("Can't be empty");
+        swal(
+          'Ooops...!!!',
+          'You must execute before you submit your code.',
+          'error'
+        )
       }else{
         if(flag){
         $.ajax({
@@ -157,7 +237,22 @@ $(document).ready(function(){
             answer: args
           },
           success: function(response){
-            alert("submitted successfully");
+            swal(
+              'Success',
+              'Your code was submitted successfully.',
+              'success'
+            )
+            switch(lang){
+              case "javascript":
+                $("#js").text(parseInt($("#js").text()) + 1);
+                break;
+              case "python":
+                $("#py").text(parseInt($("#py").text()) + 1);
+                break;
+              default:
+                $("#rb").text(parseInt($("#rb").text()) + 1);
+                break;
+            }
           }
         });
       }else{
@@ -168,12 +263,41 @@ $(document).ready(function(){
             answer: args
           },
           success: function(response){
-            alert("updated successfully");
+
           }
         });
       }
     }
   });
 
-})
+  $("#reset").click(function(){
+        swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, reset it!'
+    }).then(function () {
+      $("#sel").prop('selectedIndex',0);
+      editor.setOption("value",js);
+      editor.setOption("value",rubycon);
+      result.setOption("value","Your result appears here");
+      swal(
+        'Reset!',
+        'Your Work Has Been Reset.',
+        'success'
+      )
+    },function(dismiss){
+      if(dismiss === "cancel"){
+        swal(
+          'Cancelled'
+        )
+      }
+    }
+  )
+  });
+
+});//end of document
 </script>

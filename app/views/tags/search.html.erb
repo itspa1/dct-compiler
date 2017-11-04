@@ -13,8 +13,22 @@
   </div>
 </div>
 
+<div id="table">
+  <table id="example" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>code</th>
+        <th>body</th>
+        <th>is_allowed</th>
+      </tr>
+    </thead>
+  </table>
+</div>
 <script type="text/javascript">
   $(document).ready(function(){
+    $("#table").hide();
+    //var table = $("#example").DataTable;
     checked = "";
     $("#any").on('click',function(){
       checked = $("#any").val();
@@ -34,9 +48,38 @@
             search_type: checked
           },
           success: function(response){
-            console.log(response);
+            //var table = $("#example").DataTable();
+            //table.clear().draw();
+            $('#example').DataTable({
+              data: response,
+              columns: [
+                { 'data' : 'title' },
+                { 'data' : 'code' },
+                { 'data' : 'body' },
+                { 'data' : 'is_allowed' },
+              ]
+            });
+            $("#table").show();
           }
         });
+        // $('#example').DataTable( {
+        //   "ajax" : {
+        //     "dataSrc" : "",
+        //     "url" : "<%= tags_questions_path %>",
+        //     "type" : "get",
+        //     "data" : {
+        //       "type" : "json",
+        //       "tag_name" : sentTag,
+        //       "search_type" : checked
+        //     }//data
+        //   },//ajax
+        //   "columns" : [
+        //     { "response" : "title" },
+        //     { "response" : "code" },
+        //     { "response" : "body" },
+        //     { "response" : "is_allowed" }
+        //   ]
+        // });
       }else{
         alert("Please select search type");
       }

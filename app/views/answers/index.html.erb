@@ -15,7 +15,7 @@
   <tbody>
     <% @answers.each do |answer| %>
       <tr>
-        <td><%= answer.user_id %></td>
+        <td><%= answer.user.username %></td>
         <td><%= answer.statement %></td>
         <td><%= answer.output %></td>
         <td><%= link_to 'Show', answer %></td>
@@ -27,5 +27,3 @@
 </table>
 
 <br>
-
-<%= link_to 'New Answer', new_answer_path %>
