@@ -44,66 +44,71 @@
 
   <nav class="navbar navbar-default">
     <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">QB</a>
-    </div>
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">QB</a>
+      </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <% if current_user %>
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Assignment<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><%= link_to "New", new_assignment_path %></li>
-            <li><%= link_to "Search", tags_search_path %></li>
-            <li><%= link_to "List", assignments_path %></li>
-            <li><%= link_to "Pending Approval", approve_assignments_path %></li>
-            <li><%= link_to "Recently Added", recents_assignments_path %></li>
-            <li><%= link_to "Api available" , approved_assignments_path %></li>
-            <li><%= link_to "Deleted" , deleted_assignments_path %></li>
-            <li><%= link_to "Make api available" , approval_assignments_path %></li>
-          </ul>
-
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Answers<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><%= link_to "List", answers_path %></li>
-            <li><%= link_to "Recently Added", recents_answers_path %></li>
-          </ul>
-        </li>
-
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><%= link_to "Users", users_path %></li>
-            <li class="dropdown-submenu"><%= link_to "Tags", tags_index_path %></li>
-            <li><%= link_to "Sources", sources_assignments_path %></li>
-          </ul>
-        </li>
-
-
-        <li><%= link_to "Log-out", destroy_user_session_path ,method: :delete, data: {confirm: "Are You Sure?"}%></li>
-        <li><a href="">Welcome <%= current_user.username %></a></li>
-        <% else %>
-        <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to "Log-in" , new_user_session_path %></li>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <% if current_user %>
+        <ul class="nav navbar-nav">
+          <% if current_user.roles.map{|n| n.name}.include? "admin" %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Assignment<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "New", new_assignment_path %></li>
+              <li><%= link_to "Search", search_tags_path %></li>
+              <li><%= link_to "List", assignments_path %></li>
+              <li><%= link_to "Pending Approval", approve_assignments_path %></li>
+              <li><%= link_to "Recently Added", recents_assignments_path %></li>
+              <li><%= link_to "Api available" , approved_assignments_path %></li>
+              <li><%= link_to "Deleted" , deleted_assignments_path %></li>
+              <li><%= link_to "Make api available" , approval_assignments_path %></li>
+            </ul>
+          </li>
         </ul>
         <% end %>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+        <% if current_user.roles.map{|n| n.name}.include? "admin" %>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Answers<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "List", answers_path %></li>
+              <li><%= link_to "Recently Added", recents_answers_path %></li>
+            </ul>
+          </li>
+          <% end %>
+
+          <% if current_user.roles.map{|n| n.name}.include? "admin" %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Users", users_path %></li>
+              <li class="dropdown-submenu"><%= link_to "Tags", tags_path %></li>
+              <li><%= link_to "Sources", sources_assignments_path %></li>
+            </ul>
+          </li>
+          <% end %>
+
+          <li><%= link_to "Log-out", destroy_user_session_path ,method: :delete, data: {confirm: "Are You Sure?"}%></li>
+          <li><a href="">Welcome <%= current_user.username %></a></li>
+          <li><a href="">Personal Stats: <i class="icon-javascript" style="font-size:1em"><%= Answer.where(user_id: current_user.id,language: "javascript").size %></i> || <i class="icon-python" style="font-size:1em" ><%= Answer.where(user_id: current_user.id,language: "python").size  %></i> || <i class="icon-ruby" style="font-size:1em"  ><%= Answer.where(user_id: current_user.id,language: "ruby").size  %></i></a></li>
+          <% else %>
+          <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to "Log-in" , new_user_session_path %></li>
+          </ul>
+          <% end %>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
 
 
   <div class="container-fluid">
@@ -111,15 +116,15 @@
     <%= yield %>
 
   </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-    crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="/javascripts/codemirror.js"></script>
-    <script src="/javascripts/javascript/javascript.js"></script>
-    <script src="/javascripts/ruby.js"></script>
-    <script src="/javascripts/python.js"></script>
-    <script src="/javascripts/javascript.js"></script>
-    <script src="/javascripts/sublime.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="/javascripts/codemirror.js"></script>
+  <script src="/javascripts/javascript/javascript.js"></script>
+  <script src="/javascripts/ruby.js"></script>
+  <script src="/javascripts/python.js"></script>
+  <script src="/javascripts/javascript.js"></script>
+  <script src="/javascripts/sublime.js"></script>
 
 </body>
 </html>

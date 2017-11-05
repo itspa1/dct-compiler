@@ -10,7 +10,9 @@
 .padding-bottom{
   padding-bottom: 10px
 }
-
+.btn-margin{
+  margin-top: 10px
+}
 .font{
   font-size: 40px
 }

@@ -73,11 +73,11 @@ class AssignmentsController < ApplicationController
   end
 
   def approved
-    @assignments = Assignment.where(is_allowed: :true)
+    @assignments = Assignment.where(is_allowed: true)
   end
 
   def approve
-    @assignments = Assignment.where(approved: :false).limit(10)
+    @assignments = Assignment.where(approved: false).limit(10)
   end
 
   def deleted
@@ -85,7 +85,7 @@ class AssignmentsController < ApplicationController
   end
 
   def approval
-    @assignments = Assignment.where(is_allowed: :false).limit(10)
+    @assignments = Assignment.where(is_allowed: false).limit(10)
   end
 
   def search

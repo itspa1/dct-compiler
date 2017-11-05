@@ -23,10 +23,16 @@ Rails.application.routes.draw do
       end
   end
 
-
-  get 'tags/index'
-  get 'tags/search'
-  get 'tags/questions'
+  resources :tags do
+    collection do
+      get 'index'
+      get 'search'
+      get 'questions'
+    end
+  end
+  # get 'tags/index'
+  # get 'tags/search'
+  # get 'tags/questions'
 
   root "assignments#index"
 

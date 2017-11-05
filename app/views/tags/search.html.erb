@@ -40,7 +40,7 @@
       if(checked != ""){
         sentTag = $("#search").val();
         $.ajax({
-          url: "<%= tags_questions_path %>",
+          url: "<%= questions_tags_path %>",
           type: "get",
           data: {
             type: 'json',
@@ -65,7 +65,7 @@
         // $('#example').DataTable( {
         //   "ajax" : {
         //     "dataSrc" : "",
-        //     "url" : "<%= tags_questions_path %>",
+        //     "url" : "<%= questions_tags_path %>",
         //     "type" : "get",
         //     "data" : {
         //       "type" : "json",

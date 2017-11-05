@@ -22,7 +22,7 @@
         <td><%= assignment.is_allowed ? "true" : "false" %></td>
         <td><%= assignment.answers.size %></td>
         <td><%= assignment.tag_list %></td>
-        <td><%= link_to 'Show', assignment %>
+        <td><%= link_to 'Solve', assignment %>
           <% if current_user %>
             <% if can? :update, assignment %>
               <%= link_to 'Edit', edit_assignment_path(assignment) %>

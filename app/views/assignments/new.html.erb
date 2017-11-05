@@ -72,7 +72,7 @@
           type: "get",
           success: function(response){
             if(response["success"] == false){
-              
+
             }else{
               $("#assignment_title").val(response["name"]);
               CKEDITOR.instances['assignment_body'].setData(response["description"]);

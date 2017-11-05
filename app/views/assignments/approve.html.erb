@@ -18,7 +18,7 @@
         <td><%= assignment.code %></td>
         <td><%= raw (assignment.body).truncate(75) %></td>
         <td><%= assignment.answers.size %></td>
-        <td><%= link_to 'Show', assignment %>
+        <td><%= link_to 'Solve', assignment %>
           <% if current_user %>
             <% if can? :update, assignment %>
               <%= link_to 'Edit', edit_assignment_path(assignment) %>
