@@ -1,4 +1,4 @@
-<%= link_to "Invite",new_user_path %>
+<div class="col-md-6">
 <% if @users.nil? %>
 <span>No users yet</span>
 <% else %>
@@ -9,3 +9,26 @@
   <% end %>
 </ul>
 <% end %>
+</div>
+
+<button type="button" name="Invite" id="btn" class="btn btn-default">Invite New User</button>
+
+<div class="col-md-6" id="form" hidden="true">
+  <%= render 'users/form' %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    //$("#form").hide();
+    $("#btn").click(function(){
+      $("#form").show();
+      $("#btn").hide();
+    });
+
+    $("#inviteForm").on('submit',function(){
+      $("#form").hide();
+      $("#btn").show();
+    });
+
+  });
+</script>

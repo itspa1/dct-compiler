@@ -16,3 +16,18 @@
 .font{
   font-size: 40px
 }
+input[type=checkbox].glyphicon{
+  visibility: hidden;
+}
+.glyphicon.glyphicon-heart::before{
+  font-size: 30px;
+  visibility: visible;
+  content: "\e143" !important;
+}
+.glyphicon.glyphicon-heart:checked:before {
+   font-size: 30px;
+   content: "\e005" !important;
+}
+.right{
+  padding-left: 25px
+}

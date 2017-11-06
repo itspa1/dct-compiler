@@ -10,9 +10,14 @@ class Assignment < ApplicationRecord
   acts_as_paranoid
 
   belongs_to :user
+
   has_many :answers
+
   acts_as_taggable
 	acts_as_taggable_on :tags,:companies
+
+  has_many :favourites
+  has_many :users,through: :favourites
 
   before_validation :assign_code,on: :create
 

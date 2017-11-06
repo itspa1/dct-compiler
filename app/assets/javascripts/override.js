@@ -38,7 +38,7 @@ $.rails.showConfirmationDialog = function(link){
     if (dismiss === 'cancel') {
       swal(
         'YAY....!!!',
-        'We like having you online :)',
+        'We love having you online :)',
         'info'
       )
     }

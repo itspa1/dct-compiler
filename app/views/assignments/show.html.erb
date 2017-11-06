@@ -1,4 +1,10 @@
+<% @a = current_user.answers %>
 <div class="col-md-4 pull-right">
+  <div>
+    <input type="checkbox" name="favourite" class="glyphicon glyphicon-heart" data-toggle="tooltip" title="Favourite" id="fav" "<%= '/checked/' if !@flag.nil? %>"></input>
+    <b><span class="right">Favourite</span></b>
+  </div>
+  <br>
 <p>
   <strong>Tags:</strong>
   <%= @assignment.try(:tag_list) %>
@@ -33,3 +39,40 @@
     <%= render '/home/index' %>
     <% end %>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#fav").on('change',function(){
+      if($(this).is(':checked')){
+        var favourites = {}
+        favourites["favourites"] = {}
+        favourites["favourites"]["user_id"] = "<%= current_user.id %>"
+        favourites["favourites"]["assignment_id"] = "<%= @assignment.id %>"
+        $.ajax({
+          url: '/favourites',
+          type: 'post',
+          data: favourites,
+          success: function(response){
+            swal(
+              'success'
+            )
+          }
+        });
+      }else{
+        $.ajax({
+          url: '/favourites',
+          type: 'delete',
+          data: {
+            user_id: "<%= current_user.id %>",
+            assignment_id: "<%= @assignment.id %>"
+          },
+          success: function(response){
+            swal(
+              'success'
+            )
+          }
+        });
+      }
+    });
+  });
+</script>

@@ -13,6 +13,7 @@ class AssignmentsController < ApplicationController
   # GET /assignments/1
   # GET /assignments/1.json
   def show
+    @flag = Favourite.find_by(user_id: current_user.id,assignment_id: @assignment.id)
     @rb = @assignment.answers.where(language: "ruby")
     @js = @assignment.answers.where(language: "javascript")
     @py = @assignment.answers.where(language: "python")

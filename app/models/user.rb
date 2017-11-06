@@ -3,10 +3,18 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :invitable,
          :recoverable, :rememberable, :trackable, :validatable
-         has_many :answers
+         has_many :my_answers,foreign_key: "user_id",class_name: "Answer"
+
          has_many :permissions
          has_many :roles,through: :permissions
-         has_many :assignments
+
+         has_many :my_assignments,foreign_key: "user_id",class_name: "Assignment"
+
+         has_many :favourites
+         has_many :assignments, through: :favourites
+
+         has_many :forks
+         has_many :answers,through: :forks
 
          #after_create :assign_user_role
 

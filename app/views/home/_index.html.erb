@@ -44,7 +44,7 @@
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
         <% @rb.each do |r| %>
-          <li><%=r.user.username %>-<%= r.statement %></li>
+          <li class="ruby" id="<%= r.id %>" ><b><%=r.user.username %></b>:<p><%= r.statement %><button class="fork" id="<%= r.id %>" type="button" data-toggle="tooltip" title="Fork" value="ruby"><span class="glyphicon glyphicon-open" aria-hidden="true"></span></button></p></li>
         <% end %>
       </div>
     </div>
@@ -63,7 +63,7 @@
   <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
     <div class="panel-body">
       <% @js.each do |j| %>
-        <li><%= j.user.username %>-<%= j.statement %></li>
+        <li class="javascript" id="<%= j.id %>"><b><%= j.user.username %></b>:<p><%= j.statement %><button class="fork" id="<%= j.id %>" type="button" data-toggle="tooltip" title="Fork"value="javascript" ><span class="glyphicon glyphicon-open" aria-hidden="true"></span></button></p></li>
       <% end %>
     </div>
   </div>
@@ -82,7 +82,7 @@
   <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
     <div class="panel-body">
       <% @py.each do |p| %>
-      <li><%= p.user.username %>-<%= p.statement %></li>
+      <li class="python" id="<%= p.id %>"><b><%= p.user.username %></b>:<p><%= p.statement %></p><button class="fork" id="<%= p.id %>" type="button" data-toggle="tooltip" title="Fork" value="python"><span class="glyphicon glyphicon-open" aria-hidden="true"></span></button></p></li>
       <% end %>
     </div>
   </div>
@@ -92,6 +92,47 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+
+  //this is fork code
+  $("button.fork").on('click',function(){
+    var type = $(this).val();
+    var code = $("li#" + $(this).attr("id") + "." + type).find('p').text();
+    switch (type) {
+      case "javascript":
+        $("#sel option[value="+type+"]").prop('selected','selected');
+        editor.setOption("mode",type);
+        editor.setOption("value",code);
+        break;
+      case "python":
+        $("#sel option[value="+type+"]").prop('selected','selected');
+        editor.setOption("mode",type);
+        editor.setOption("value",code);
+        break;
+      default:
+        $("#sel option[value="+type+"]").prop('selected','selected');
+        editor.setOption("mode",type);
+        editor.setOption("value",code);
+        break;
+    }//switch end
+    var fork = {};
+    fork["forks"] = {};
+    fork["forks"]["user_id"] = "<%= current_user.id %>";
+    fork["forks"]["answer_id"] = $(this).attr("id");
+    $.ajax({
+      url: "/forks",
+      type: "post",
+      data: fork,
+      success: function(response){
+        swal(
+          'You forked this.'
+        )
+      }
+    });
+
+  });
+
+
+  //this is compiler code
   var flag = true;
   var lang = "ruby";
   var eName = "<%= current_user.try(:id).to_s + "_" + @assignment.id.to_s %>";

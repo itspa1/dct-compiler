@@ -30,9 +30,11 @@ Rails.application.routes.draw do
       get 'questions'
     end
   end
-  # get 'tags/index'
-  # get 'tags/search'
-  # get 'tags/questions'
+
+  match 'favourites' , to: 'favourites#create' , via: :post
+  match 'favourites' , to: 'favourites#destroy' , via: :delete
+
+  match 'forks' ,to: 'forks#create' ,via: :post
 
   root "assignments#index"
 

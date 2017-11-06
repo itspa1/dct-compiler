@@ -9,8 +9,9 @@
 
 
     <%= f.label :password ,class: "sr-only" %><br />
-    <%= f.password_field :password, autocomplete: "off",class: "form-control",placeholder: "Password" %>
+    <%= f.password_field :password, autocomplete: "off",class: "form-control",placeholder: "Password",id: "pass" %>
 
+    <input type="checkbox" id="show">Show
 
   <% if devise_mapping.rememberable? -%>
     <div class="checkbox">
@@ -18,9 +19,20 @@
     </div>
   <% end -%>
 
-
     <%= f.submit "Sign in" ,class: "btn btn-lg btn-primary btn-block"%>
 
 <% end %>
 <%= render "devise/shared/links" %>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#show").on('change',function(){
+      if($(this).is(":checked")){
+        $("#pass").prop("type","text");
+      }else{
+        $("#pass").prop("type","password");
+      }
+    });
+  });
+</script>

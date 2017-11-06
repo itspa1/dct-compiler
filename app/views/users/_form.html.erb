@@ -1,4 +1,6 @@
-<%= form_for @user do |f| %>
+
+  <h4>Invite New User</h4>
+<%= form_for @user = User.new , html: {id: "inviteForm"} do |f| %>
 
   <% if @user.errors.any? %>
       <div id="error_explanation">
@@ -11,28 +13,15 @@
         </div>
     <% end %>
 
-    <div class="col-md-4">
-
-    <div class="columns">
         <%= f.label :username %>
         <%= f.text_field :username , class: "form-control"%>
-    </div>
 
-    <div class="columns">
       <%= f.label :email %>
       <%= f.text_field :email ,class: "form-control" %>
-			</div>
 
-      <div class="columns">
-        <%= f.label :role_ids %>
-        <%= f.collection_check_boxes :role_ids, Role.all, :id, :name  %>
-			</div>
+        <%= f.label :role_ids %><br>
+        <%= f.collection_check_boxes :role_ids, Role.all, :id, :name  %><br>
 
-        <div class="columns">
           <%= f.submit "Invite", class: "btn btn-success"%>
-        </div>
-
 
         <% end %>
-
-      </div>
