@@ -23,6 +23,8 @@
 </div>
 <script type="text/javascript">
   $(document).ready(function(){
+    $("#submit").removeAttr('data-disable-with');
+    $("#fetch").removeAttr('data-disable-with');
     $("#codewars").hide();
     $("#search-form").on('submit',function(e){
       e.preventDefault();
@@ -68,11 +70,16 @@
       }else{
         var slug = $("#input").val();
         $.ajax({
-          url: "https://www.codewars.com/api/v1/code-challenges/" + slug,
+          url: "<%= findslug_assignments_path %>",
           type: "get",
+          data: {
+            name: slug
+          },
           success: function(response){
             if(response["success"] == false){
-
+              swal(
+                'Not found on codewars ensure you typed the slug name properly.'
+              )
             }else{
               $("#assignment_title").val(response["name"]);
               CKEDITOR.instances['assignment_body'].setData(response["description"]);

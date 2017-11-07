@@ -69,6 +69,10 @@ GEM
       capistrano (~> 3.7)
       capistrano-bundler
       puma (~> 3.4)
+    chosen-rails (1.5.2)
+      coffee-rails (>= 3.2)
+      railties (>= 3.0)
+      sass-rails (>= 3.2)
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -242,6 +246,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.1, >= 1.1.6)
   capistrano-rbenv (~> 2.0, >= 2.0.4)
   capistrano3-puma
+  chosen-rails
   coffee-rails (~> 4.2)
   devise
   devise_invitable

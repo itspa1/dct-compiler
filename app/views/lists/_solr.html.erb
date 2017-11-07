@@ -1,0 +1,49 @@
+
+  <h2>Check for assignment codes</h2>
+  <form id="search-form">
+    <%= text_field_tag :search  %>
+    <%= submit_tag "Search" ,:id => "submit" %>
+  </form>
+  <div class="results"></div>
+
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+  $("#submit").removeAttr('data-disable-with');
+  $("#search-form").on('submit',function(e){
+    e.preventDefault();
+    if($("#search").val() == ""){
+      swal(
+      'Ooops...!!!',
+      'You need to enter something for me to search.',
+      'error'
+      )
+    }else{
+      $.ajax({
+        url: "<%= search_assignments_path %>",
+        type: "get",
+        data: {
+          type: 'json',
+          search: $("#search").val()
+        },
+        success: function(response){
+          if(response.length == 0){
+            swal(
+              'No matches'
+            )
+          }else{
+            $('.results').empty();
+            $('.results').append("These are similar to you search");
+            $('.results').append("<ul>");
+              response.forEach(function(r){
+                $('.results').append("<li><b>"+ r.code + "-></b><a href=/assignments/" + r.id +">" + r.title +"</a></li>");
+              });
+              $('.results').append("</ul>");
+            }
+          }
+        });
+      }
+    });//search form end
+})
+</script>

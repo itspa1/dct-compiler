@@ -1,7 +1,7 @@
 class AssignmentsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  skip_authorize_resource  only: [:recents,:approved,:deleted,:approval,:search,:sources,:approve]
+  skip_authorize_resource  only: [:recents,:approved,:deleted,:approval,:search,:sources,:approve,:findslug]
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   # GET /assignments
@@ -102,6 +102,14 @@ class AssignmentsController < ApplicationController
 
   def sources
     @sources = Assignment.all.map{|n| n.source}.uniq
+  end
+
+  def findslug
+    @slug = params[:name]
+    @response = HTTParty.get("https://www.codewars.com/api/v1/code-challenges/" + @slug)
+    respond_to do |format|
+      format.json {render json: @response}
+    end
   end
 
   private

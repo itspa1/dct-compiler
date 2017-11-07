@@ -16,6 +16,7 @@ class User < ApplicationRecord
          has_many :forks
          has_many :answers,through: :forks
 
+         has_many :lists
          #after_create :assign_user_role
 
          def role? role

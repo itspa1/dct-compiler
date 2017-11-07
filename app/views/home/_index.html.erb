@@ -44,7 +44,7 @@
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
         <% @rb.each do |r| %>
-          <li class="ruby" id="<%= r.id %>" ><b><%=r.user.username %></b>:<p><%= r.statement %><button class="fork" id="<%= r.id %>" type="button" data-toggle="tooltip" title="Fork" value="ruby"><span class="glyphicon glyphicon-open" aria-hidden="true"></span></button></p></li>
+          <li class="ruby" id="<%= r.id %>" ><b><%=r.user.username %></b>:<p><%= r.statement %><% if !(@a.include? r.id) %><button class="fork" id="<%= r.id %>" type="button" data-toggle="tooltip" title="Fork" value="ruby"><span class="glyphicon glyphicon-open" aria-hidden="true"></span></button><% else %><p>You already forked this</p><% end %></p></li>
         <% end %>
       </div>
     </div>
@@ -63,7 +63,7 @@
   <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
     <div class="panel-body">
       <% @js.each do |j| %>
-        <li class="javascript" id="<%= j.id %>"><b><%= j.user.username %></b>:<p><%= j.statement %><button class="fork" id="<%= j.id %>" type="button" data-toggle="tooltip" title="Fork"value="javascript" ><span class="glyphicon glyphicon-open" aria-hidden="true"></span></button></p></li>
+        <li class="javascript" id="<%= j.id %>"><b><%= j.user.username %></b>:<p><%= j.statement %><% if !(@a.include? j.id) %><button class="fork" id="<%= j.id %>" type="button" data-toggle="tooltip" title="Fork"value="javascript" ><span class="glyphicon glyphicon-open" aria-hidden="true"></span></button><% else %><p>You already forked this</p><% end %></p></li>
       <% end %>
     </div>
   </div>
@@ -82,7 +82,7 @@
   <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
     <div class="panel-body">
       <% @py.each do |p| %>
-      <li class="python" id="<%= p.id %>"><b><%= p.user.username %></b>:<p><%= p.statement %></p><button class="fork" id="<%= p.id %>" type="button" data-toggle="tooltip" title="Fork" value="python"><span class="glyphicon glyphicon-open" aria-hidden="true"></span></button></p></li>
+      <li class="python" id="<%= p.id %>"><b><%= p.user.username %></b>:<p><%= p.statement %></p><% if !(@a.include? p.id) %><button class="fork" id="<%= p.id %>" type="button" data-toggle="tooltip" title="Fork" value="python"><span class="glyphicon glyphicon-open" aria-hidden="true"></span></button><% else %><p>You already forked this</p><% end %></p></li>
       <% end %>
     </div>
   </div>
@@ -128,7 +128,7 @@ $(document).ready(function(){
         )
       }
     });
-
+    $(this).hide();
   });
 
 

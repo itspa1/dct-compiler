@@ -51,6 +51,7 @@
             //var table = $("#example").DataTable();
             //table.clear().draw();
             $('#example').DataTable({
+              destroy: true,
               data: response,
               columns: [
                 { 'data' : 'title' },

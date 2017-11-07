@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get 'approval'
       get 'sources'
       get 'approve'
+      get 'findslug'
     end
   end
 
@@ -31,10 +32,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :lists
+
   match 'favourites' , to: 'favourites#create' , via: :post
   match 'favourites' , to: 'favourites#destroy' , via: :delete
 
   match 'forks' ,to: 'forks#create' ,via: :post
+  get 'forks/myforks'
 
   root "assignments#index"
 

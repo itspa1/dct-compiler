@@ -25,7 +25,7 @@ class TagsController < ApplicationController
     else
       @questions = Assignment.tagged_with(@tag_name,:any => true)
     end
-    # @response["response"] = @questions
+    @questions.map{|n| n.body = n.body.truncate(150)}
     respond_to do |format|
       format.json { render json: @questions,only: [:title,:code,:body,:is_allowed]}
     end

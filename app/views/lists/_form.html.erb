@@ -1,0 +1,34 @@
+<%= form_for(list) do |f| %>
+  <% if list.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(list.errors.count, "error") %> prohibited this list from being saved:</h2>
+
+      <ul>
+      <% list.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title,class: "form-control" %>
+  </div>
+
+  <%= f.hidden_field :user_id ,value: current_user.id %>
+
+  <div class="field">
+    <%= f.label :tag_list %>
+    <%= f.text_field :tag_list ,:data => {:role => "tagsinput"} %>
+  </div>
+
+  <div class="field">
+    <%= f.label :add_assignments %><br>
+    <%= f.select :assignment_ids,Assignment.all.map { |m| [m.code, m.id] },{ include_blank: true },{ class: 'chosen-select' ,multiple: true}%>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "create", class: "btn btn-primary btn-margin" %>
+  </div>
+<% end %>

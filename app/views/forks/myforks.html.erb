@@ -1,0 +1,11 @@
+<h2>Your Forks</h2>
+
+<% if @forks.empty? %>
+<p>you have not forked anything yet</p>
+<% else %>
+  <ul>
+    <% @forks.each do |fork| %>
+    <li><b><%= Assignment.find(fork.assignment_id).title %></b>-<%= fork.statement %>-language -> <%= fork.language %></li>
+    <% end %>
+  </ul>
+<% end %>

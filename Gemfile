@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'chosen-rails'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'devise'
 gem 'devise_invitable'

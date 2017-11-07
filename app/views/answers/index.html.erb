@@ -7,8 +7,7 @@
     <tr>
       <th>User</th>
       <th>Statement</th>
-      <th>Output</th>
-      <th colspan="3"></th>
+      <th>Forks</th>
     </tr>
   </thead>
 
@@ -17,10 +16,7 @@
       <tr>
         <td><%= answer.user.username %></td>
         <td><%= answer.statement %></td>
-        <td><%= answer.output %></td>
-        <td><%= link_to 'Show', answer %></td>
-        <td><%= link_to 'Edit', edit_answer_path(answer) %></td>
-        <td><%= link_to 'Destroy', answer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= answer.forks.count %></td>
       </tr>
     <% end %>
   </tbody>

@@ -19,6 +19,9 @@ class Assignment < ApplicationRecord
   has_many :favourites
   has_many :users,through: :favourites
 
+  has_many :list_assignments
+  has_many :lists,through: :list_assignments
+
   before_validation :assign_code,on: :create
 
   def assign_code

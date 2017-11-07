@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171106172543) do
+ActiveRecord::Schema.define(version: 20171107060319) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
@@ -46,6 +46,20 @@ ActiveRecord::Schema.define(version: 20171106172543) do
 
   create_table "forks", force: :cascade do |t|
     t.integer  "answer_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "list_assignments", force: :cascade do |t|
+    t.integer  "list_id"
+    t.integer  "assignment_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.string   "title"
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

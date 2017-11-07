@@ -1,0 +1,10 @@
+<h1>New List</h1>
+
+<div class="col-md-4">
+  <%= render 'form', list: @list %>
+  <%= link_to 'Back', lists_path %>
+</div>
+
+<div class="col-md-8">
+  <%= render 'solr' %>
+</div>
