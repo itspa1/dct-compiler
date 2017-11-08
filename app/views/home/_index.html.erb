@@ -144,6 +144,7 @@ $(document).ready(function(){
   var rid = 0;
   var jsid = 0;
   var pid = 0;
+  check(lang);
   var editor = CodeMirror(document.getElementById('text'),{
     value: "#type code here",
     mode: "ruby",
@@ -168,6 +169,10 @@ $(document).ready(function(){
 
     $("#sel").on('change',function(){
       lang = this.value;
+      check(lang);
+    });
+
+    function check(lang){
       $.ajax({
         url: "<%= home_check_cache_path %>",
         type: "get",
@@ -228,7 +233,8 @@ $(document).ready(function(){
           editor.setOption("mode",lang);
         }
       });
-    });
+    };
+
 
     $("#load").click(function(){
         var sent = editor.getValue();
