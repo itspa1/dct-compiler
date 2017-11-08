@@ -9,14 +9,11 @@
         <option value="javascript">JavaScript</option>
         <option value="python">Python3</option>
       </select>
-
        <h4 class="pull-right"><b class="font">Stats:</b><i class="icon-javascript" style="font-size:2em" id="js" ><%= @js.size %></i> || <i class="icon-python" style="font-size:2em" id="py" ><%= @py.size %></i> || <i class="icon-ruby" style="font-size:2em" id="rb" ><%= @rb.size %></i></h4><br/><br/>
     </div>
 
       <div class="col-md-12">
-        <div id="text" class="padding-bottom">
-
-        </div>
+        <div id="text" class="padding-bottom"></div>
         <button type="button" name="execute" id="load" class="btn btn-primary">Execute</button>
         <button type="button" name="reset" id="reset" class="btn btn-danger">Reset</button>
         <button type="button" name="submit" class="btn btn-success" id="sub">Submit</button>
@@ -26,9 +23,7 @@
 
     <div  id="para">
       <h2>Output</h2>
-      <div id="result" class="padding-bottom">
-
-      </div>
+      <div id="result" class="padding-bottom"></div>
     </div>
 <!-- accordion -->
 <% if !@rb.empty? %>
@@ -89,6 +84,7 @@
 </div>
 <% end %>
 </div>
+
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -300,6 +296,7 @@ $(document).ready(function(){
               'Your code was submitted successfully.',
               'success'
             )
+            $("#link").prop("hidden",false);
             switch(lang){
               case "javascript":
                 $("#js").text(parseInt($("#js").text()) + 1);

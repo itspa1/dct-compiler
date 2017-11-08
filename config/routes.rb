@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'sources'
       get 'approve'
       get 'findslug'
+      get 'random'
     end
   end
 

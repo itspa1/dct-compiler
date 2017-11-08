@@ -69,7 +69,7 @@ $(document).ready(function(){
                   type: "get",
                   success: function(response){
                     $(".modal-title").html("<p><b>" + response["title"] + "</b></p>");
-                    $(".modal-body").html(response["body"].replace(regex,"\n"));
+                    $(".modal-body").html(response["body"]);
                   }
                 });
               $("#myModal").modal('show');

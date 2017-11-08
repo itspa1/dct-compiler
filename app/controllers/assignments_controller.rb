@@ -1,7 +1,7 @@
 class AssignmentsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
-  skip_authorize_resource  only: [:recents,:approved,:deleted,:approval,:search,:sources,:approve,:findslug]
+  skip_authorize_resource  only: [:recents,:approved,:deleted,:approval,:search,:sources,:approve,:findslug,:random]
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
 
   # GET /assignments
@@ -117,6 +117,21 @@ class AssignmentsController < ApplicationController
     @response = HTTParty.get("https://www.codewars.com/api/v1/code-challenges/" + @slug)
     respond_to do |format|
       format.json {render json: @response}
+    end
+  end
+
+  def random
+    type = params[:type]
+    if type == "next"
+      id = Assignment.offset(params[:id].to_i).limit(30).pluck(:id).sample
+      @assignment = Assignment.find(id)
+      redirect_to @assignment
+    elsif type == "skip"
+      id = Assignment.limit(params[:id]).pluck(:id).sample
+      @assignment = Assignment.find(id)
+      redirect_to @assignment
+    else
+      redirect_to :root ,notice: "something went wrong!!! don't manipulate the url."
     end
   end
 

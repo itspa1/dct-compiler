@@ -6,11 +6,19 @@ class ListsController < ApplicationController
   # GET /lists.json
   def index
     @lists = List.all
+    respond_to do |format|
+      format.html {}
+      format.json { render json: @lists}
+    end
   end
 
   # GET /lists/1
   # GET /lists/1.json
   def show
+    respond_to do |format|
+      format.html {}
+      format.json { render json: @list,except: [:created_at,:updated_at],include: [:assignments,:tags]}
+    end
   end
 
   # GET /lists/new

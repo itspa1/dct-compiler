@@ -100,8 +100,8 @@
           <% end %>
           <li><%= link_to "my forks", forks_myforks_path %></li>
           <li><%= link_to "Log-out", destroy_user_session_path ,method: :delete, data: {confirm: "Are You Sure?"}%></li>
-          <li><a href="">Welcome <%= current_user.username %></a></li>
-          <li><a href="">Personal Stats: <i class="icon-javascript" style="font-size:1em"><%= Answer.where(user_id: current_user.id,language: "javascript").size %></i> || <i class="icon-python" style="font-size:1em" ><%= Answer.where(user_id: current_user.id,language: "python").size  %></i> || <i class="icon-ruby" style="font-size:1em"  ><%= Answer.where(user_id: current_user.id,language: "ruby").size  %></i></a></li>
+          <li><a>Welcome <%= current_user.username %></a></li>
+          <li><a>Personal Stats: <i class="icon-javascript" style="font-size:1em"><%= Answer.where(user_id: current_user.id,language: "javascript").size %></i> || <i class="icon-python" style="font-size:1em" ><%= Answer.where(user_id: current_user.id,language: "python").size  %></i> || <i class="icon-ruby" style="font-size:1em"  ><%= Answer.where(user_id: current_user.id,language: "ruby").size  %></i></a></li>
           <% else %>
           <ul class="nav navbar-nav navbar-right">
             <li><%= link_to "Log-in" , new_user_session_path %></li>
@@ -112,11 +112,8 @@
     </div><!-- /.container-fluid -->
   </nav>
 
-
   <div class="container-fluid">
-
     <%= yield %>
-
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
   crossorigin="anonymous"></script>

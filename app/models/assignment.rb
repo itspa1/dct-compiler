@@ -3,6 +3,7 @@ class Assignment < ApplicationRecord
   searchable do
     string :title
     text :body
+    string :tag_list
   end
 
   validates_uniqueness_of :code , message: "Re-submit to generate a new code."
