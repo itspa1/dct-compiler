@@ -1,8 +1,8 @@
 # README
 
-* Ruby version ~> 2.4.1
+* Ruby version ~> 2.6.3
 
-* System dependencies ~> Requires Rails V5.0.4 and since we now support js you should have Node installed on your system or your server to run the scripts.
+* System dependencies ~> Requires Rails V5.0.4 and since we now support js you should have Node installed on the server to run the scripts.
 
 * Configuration  ~> Does not require any extra configs
 
@@ -14,5 +14,9 @@
 
 * update ~> This application has now been added the capability to run javascript code also via node
 =======
+
 # online-compiler
-A rails application which is an Online Compiler
+A rails application which is an Online Compiler.
+
+## PS
+This is a POC of the actual compiler infra which is used in the application, the application is maintained on a private repo.
